@@ -10,7 +10,11 @@ ENV SRV1CREPO_PORT ${SRV1CREPO_PORT}
 
 RUN apt-get -qq update
 
-ADD debs/1c-server-${SRV1CV8_VERSION}.tar /tmp/
+ADD dist/client.tar.gz /tmp/ 
+ADD dist/server.tar.gz /tmp/ 
+RUN  tar xvzf client.tar.gz \
+    && tar xvzf server.tar.gz
+
 RUN apt-get -qq update                      \
     && cd /tmp && dpkg -i *.deb && rm *.deb \
     && mkdir -p ${SRV1CV8_REPOSITORY} && chmod 777 ${SRV1CV8_REPOSITORY}

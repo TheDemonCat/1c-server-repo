@@ -40,30 +40,21 @@ then
     echo "Auth failed"
     exit 1
 fi
-
+# windows_8_3_14_1565.rar
 CLIENTLINK=$(curl -s -G \
     -b /tmp/cookies.txt \
     --data-urlencode "nick=Platform83" \
     --data-urlencode "ver=$VERSION" \
-    --data-urlencode "path=Platform\\${VERSION//./_}\\client_${VERSION//./_}.deb64.tar.gz" \
+    --data-urlencode "path=Platform\\${VERSION//./_}\\windows_${VERSION//./_}.rar" \
     https://releases.1c.ru/version_file | grep -oP '(?<=a href=")[^"]+(?=">Скачать дистрибутив<)')
 
 echo "clientlinc $CLIENTLINK"
 
-SERVERINK=$(curl -s -G \
-    -b /tmp/cookies.txt \
-    --data-urlencode "nick=Platform83" \
-    --data-urlencode "ver=$VERSION" \
-    --data-urlencode "path=Platform\\${VERSION//./_}\\deb64_${VERSION//./_}.tar.gz" \
-    https://releases.1c.ru/version_file | grep -oP '(?<=a href=")[^"]+(?=">Скачать дистрибутив<)')
-
-echo "SERVERINK $SERVERINK"
-
 mkdir -p dist
 
-curl --fail -b /tmp/cookies.txt -o dist/client.tar.gz -L "$CLIENTLINK"
-curl --fail -b /tmp/cookies.txt -o dist/server.tar.gz -L "$SERVERINK"
+curl --fail -b /tmp/cookies.txt -o dist/windows.rar -L "$CLIENTLINK"
 
 rm /tmp/cookies.txt
+
 
 echo "GOOD!"
